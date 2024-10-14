@@ -1,0 +1,2 @@
+@forge-std=lib/forge-std/src
+@oz_sflax/contracts=lib/openzeppelin-contracts/contracts

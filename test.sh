@@ -1,0 +1,1 @@
+forge build --skip *.not.sol && export FOUNDRY_PROFILE="test" && forge test
