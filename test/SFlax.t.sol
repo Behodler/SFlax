@@ -18,6 +18,19 @@ contract MockFlax is ERC20 {
     }
 }
 
+contract MockBurner {
+    SFlax sFlax;
+
+    constructor(address sFlaxAddress) {
+        sFlax = SFlax(sFlaxAddress);
+    }
+
+    function burnFrom(address holder) public {
+        uint balance = sFlax.balanceOf(holder);
+        sFlax.burnFrom(holder, balance);
+    }
+}
+
 contract TestSFlax is Test {
     MockFlax flax;
     FlaxLocker locker;
@@ -159,5 +172,28 @@ contract TestSFlax is Test {
 
         vm.assertEq(timeRemainingAfter, timeRemainingBefore * 2);
         vm.assertEq(timeRemainingBefore, 20 * (30 days));
+    }
+
+    function testBoosterBurnPermissions() public {
+        SFlax sFlax = new SFlax();
+        sFlax.mint(user, 1000 ether);
+        sFlax.transferOwnership(address(locker));
+        locker.setConfig(
+            address(flax),
+            address(sFlax),
+            500,
+            (1 ether) / 1000_000
+        );
+
+        MockBurner mockBurner = new MockBurner(address(address(sFlax)));
+
+        vm.expectRevert("Non approved burner");
+        mockBurner.burnFrom(user);
+
+        locker.setBooster(address(mockBurner), true);
+        mockBurner.burnFrom(user);
+
+        uint balance = sFlax.balanceOf(user);
+        vm.assertEq(balance, 0);
     }
 }

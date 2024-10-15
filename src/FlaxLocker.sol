@@ -52,6 +52,10 @@ contract FlaxLocker is Ownable, ReentrancyGuard {
         disabled = true;
     }
 
+    function setBooster (address booster, bool live) public onlyOwner {
+            config.sFlax.setApprovedBurner(booster,live);
+    }
+
     function setConfig(
         address flax,
         address sFlax, //if zero, a new sFlax is instantiated

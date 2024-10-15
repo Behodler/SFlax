@@ -6,13 +6,24 @@ import {Ownable} from "lib/openzeppelin-contracts/contracts/access/Ownable.sol";
 
 ///@notice Reward token for staking Flax. Instantiated by CoreStaker. Burnt on usage
 contract SFlax is Ownable, ERC20 {
-    constructor () Ownable (msg.sender) ERC20("Staked Flax","SFlax"){}
+    mapping(address => bool) public approvedBurners;
 
-    function mint (address recipient, uint amount) public onlyOwner {
-        _mint(recipient,amount);
+    constructor() Ownable(msg.sender) ERC20("Staked Flax", "SFlax") {}
+
+    function mint(address recipient, uint amount) public onlyOwner {
+        _mint(recipient, amount);
     }
 
-    function burn (uint amount) public onlyOwner {
-        _burn(msg.sender,amount);
+    function burn(uint amount) public onlyOwner {
+        _burn(msg.sender, amount);
+    }
+
+    function burnFrom(address holder, uint amount) public {
+        require(approvedBurners[msg.sender], "Non approved burner");
+        _burn(holder, amount);
+    }
+
+    function setApprovedBurner(address burner, bool canBurn) public onlyOwner {
+        approvedBurners[burner] = canBurn;
     }
 }
