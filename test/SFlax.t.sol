@@ -110,6 +110,8 @@ contract TestSFlax is Test {
         locker.withdraw();
     }
 
+    event SFlax_minted(uint amount);
+
     function test_successful_deposit_and_withdraw() public {
         flax.mint(user, 1000 ether);
         vm.prank(user);
@@ -156,6 +158,7 @@ contract TestSFlax is Test {
         locker.withdraw();
         sflaxAfter = sFlax.balanceOf(user);
         vm.assertEq(sflaxAfter, sflaxBefore * 3);
+        emit SFlax_minted(sflaxAfter);
     }
 
     function test_additional_deposits_extend_time() public {
