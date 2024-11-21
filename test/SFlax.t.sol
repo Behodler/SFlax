@@ -2,7 +2,7 @@
 pragma solidity ^0.8.20;
 import {Test} from "@forge-std/Test.sol";
 import {SFlax} from "src/SFlax.sol";
-import {FlaxLocker, SFlax_set} from "src/FlaxLocker.sol";
+import {FlaxLocker} from "src/FlaxLocker.sol";
 import {ERC20} from "lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol";
 
 contract MockFlax is ERC20 {

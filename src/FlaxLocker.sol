@@ -19,9 +19,9 @@ struct UserStakingInfo {
     uint lockedFlax;
 }
 
-event SFlax_set(address indexed oldSFlax, address indexed newSFlax);
-
 contract FlaxLocker is Ownable, ReentrancyGuard {
+    event SFlax_set(address indexed oldSFlax, address indexed newSFlax);
+
     Config public config;
     bool disabled;
     bool emergencyGlass;
