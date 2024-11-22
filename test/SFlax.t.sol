@@ -63,7 +63,7 @@ contract TestSFlax is Test {
         // emit SFlax_set(address(0), address(0));
         newLocker.setConfig(address(flax), address(0), 500, 1000_000);
 
-        (, , , SFlax oldFlax) = locker.config();
+        (, , SFlax oldFlax) = locker.config();
 
         // vm.expectEmit(true, false, false, false);
         // emit SFlax_set(address(oldFlax), address(0));
@@ -133,7 +133,7 @@ contract TestSFlax is Test {
 
         //get from config
 
-        (, , , SFlax sFlax) = locker.config();
+        (, , SFlax sFlax) = locker.config();
         uint sflaxBefore = sFlax.balanceOf(user);
         vm.assertEq(sflaxBefore, 0);
 
