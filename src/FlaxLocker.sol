@@ -9,7 +9,7 @@ import {Vm} from "lib/forge-std/src/Test.sol";
 
 struct Config {
     IERC20 flax;
-    uint256 basisPointsBoost; //For every month locked, a 5% boost expressed in basis points
+    // uint256 basisPointsBoost; //For every month locked, a 5% boost expressed in basis points
     uint256 sFlaxEarning_baseline; //1 ether => 1 unit per unit per minute staked (not typo)
     SFlax sFlax;
 }
@@ -66,7 +66,7 @@ contract FlaxLocker is Ownable, ReentrancyGuard {
     ) public onlyOwner {
         require(basisPointsBoost < 10_000, "basisPointsBoost must be basis point");
 
-        config.basisPointsBoost = basisPointsBoost;
+        // config.basisPointsBoost = basisPointsBoost;
         config.flax = IERC20(flax);
         config.sFlaxEarning_baseline = sFlaxEarning_baseline;
         if (sFlax == address(0)) {
