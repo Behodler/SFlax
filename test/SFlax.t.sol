@@ -41,7 +41,7 @@ contract TestSFlax is Test {
         locker = new FlaxLocker(address(vm));
         flax.mint(address(this), 200_000 ether);
         vm.deal(user, 10 ether);
-        locker.setConfig(address(flax), address(0), 500, (1 ether) / 1000_000);
+        locker.setConfig(address(flax), address(0), (1 ether) / 1000_000);
     }
 
     function testSetup() public {}
@@ -61,23 +61,23 @@ contract TestSFlax is Test {
 
         // vm.expectEmit(true, false, false, false);
         // emit SFlax_set(address(0), address(0));
-        newLocker.setConfig(address(flax), address(0), 500, 1000_000);
+        newLocker.setConfig(address(flax), address(0), 1000_000);
 
         (, , SFlax oldFlax) = locker.config();
 
         // vm.expectEmit(true, false, false, false);
         // emit SFlax_set(address(oldFlax), address(0));
-        newLocker.setConfig(address(flax), address(0), 500, 1000_000);
+        newLocker.setConfig(address(flax), address(0), 1000_000);
     }
 
     function test_set_non_zero_sflax() public {
         SFlax newSFlax = new SFlax();
 
         vm.expectRevert("SFlax ownership not transferred");
-        locker.setConfig(address(flax), address(newSFlax), 500, 1000);
+        locker.setConfig(address(flax), address(newSFlax), 1000);
 
         newSFlax.transferOwnership(address(locker));
-        locker.setConfig(address(flax), address(newSFlax), 500, 1000);
+        locker.setConfig(address(flax), address(newSFlax), 1000);
     }
 
     function test_manual_disable_with_reverts() public {
@@ -184,7 +184,6 @@ contract TestSFlax is Test {
         locker.setConfig(
             address(flax),
             address(sFlax),
-            500,
             (1 ether) / 1000_000
         );
 
