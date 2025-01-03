@@ -28,7 +28,7 @@ contract SFlax is Ownable, ERC20, ISFlax {
         _mint(recipient, amount);
     }
 
-    function burn(uint amount) public onlyOwner {
+    function burn(uint amount) public {
         _burn(msg.sender, amount);
     }
 
